@@ -128,7 +128,7 @@ button
     }
 .table
 {
-    width: 81%;
+    width: 83%;
     border: 1px solid black;
 }
 .btn
@@ -146,4 +146,16 @@ button
 {
     color: white;
     background: green;
+}
+.btn1
+{
+    background: #139c50;
+    color: white;
+}
+.form_drop
+{
+    height: 28px;
+}
+.input{
+    width: 70%;
 }

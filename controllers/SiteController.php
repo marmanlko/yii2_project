@@ -81,17 +81,30 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
+        $model = new Todo();
+        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        //     return $this->goBack();
+        // }
 
-        $model->password = '';
+        // $model->password = '';
         return $this->render('login', [
             'model' => $model,
             'todo'=>$todo,
             'category'=>$category,
         ]);
+
+        $formData=Yii::$app->request->post();
+        if($model->load($formData)){
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('message',"Successfull");
+                return $this->redirect(['login']);
+            }
+            else
+            {
+                Yii::$app->getSession()->setFlash('message',"Successfull");   
+            }
+        }
+        return $this->render('login',['post'=>$model]);
     }
     public function actionDelete($id)
     {
@@ -101,6 +114,10 @@ class SiteController extends Controller
             Yii::$app->getSession()->setFlash('message',"Deleted Successfully!!");
             return $this->redirect(['login']);
         }
+    }
+    public function actionCreate()
+    {
+
     }
 
     /**

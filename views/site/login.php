@@ -6,6 +6,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\category;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Login';
 // $this->params['breadcrumbs'][] = $this->title;
@@ -28,31 +30,33 @@ $this->title = 'Handysolver';
         <?php?>
         <div style="border: 1px solid black;padding: 15px;">
         <div class="row">
+            <?php $form=ActiveForm::begin()?>
             <div class="col-sm-3">
-                <select>
-                    <?php foreach($category as $categ)
-                    {?>
-                    <option><?php echo $categ->name;?></option>
-                    <?php
-                }
-                    ?>
-                </select>
+                <?php 
+                    
+                    $category=category::find()->all();
+                    $listData=ArrayHelper::map($category,'id','name');
+                    echo $form->field($model, 'category_id')->dropDownList(
+                        $listData,
+                        ['prompt'=>'Category...',
+                        'class'=>'form_drop']
+                        )->label(false);
+                ?>
+                
             
             </div>
             <div class="col-sm-4">
-                <input type="text" name="" style="width: 60%;">
-                <button style="background: green;color: white;">Add</button>
+                <?= $form->field($model,'name')->textInput(['class'=>'input'])
+                    ->label(false); ?>
+                <?= $form->field($model,'timestamp')->textInput(['class'=>'input2','value'=>date('d-m-Y'),'type'=>'hidden'])
+                    ->label(false); ?>
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <?php
-            
-            ?>
+            <div class="col-sm-1">
+                <?= Html::submitButton('Add', ['class'=> 'btn1']); ?>
+            </div>
+            <?php ActiveForm::end()?>
+        </div>
+            <br><br><br><br><br><br><br>
             <div class="row">
                 <table class="table table-bordered" align="center">
                     <thead>
@@ -82,7 +86,7 @@ $this->title = 'Handysolver';
                                 {
                                     echo "NA";
                                 }
-                            ?>
+                                ?>
                                 
                             </td>
                             <td><?php echo $todo->timestamp;?></td>
