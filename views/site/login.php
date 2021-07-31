@@ -17,6 +17,10 @@ $this->title = 'Login';
 <?php
 // use yii\helpers\Html;
 $this->title = 'Handysolver';
+if(Yii::$app->session->hasFlash('message'))
+{
+    echo Yii::$app->session->getFlash('message');
+}
 ?>
 <div class="container">
 
@@ -56,7 +60,7 @@ $this->title = 'Handysolver';
             </div>
             <?php ActiveForm::end()?>
         </div>
-            <br><br><br><br><br><br><br>
+            <br><br><br><br><br>
             <div class="row">
                 <table class="table table-bordered" align="center">
                     <thead>
@@ -72,19 +76,17 @@ $this->title = 'Handysolver';
                         <?php if(count($todo)>0)
                         {
                             foreach($todo as $todo ){
-                                foreach($category as $categ)
+                                
                             ?>
                         <tr>
                             <td><?php echo $todo->name;?></td>
                             <td>
                                 <?php 
+                                foreach($category as $categ){
                                 if($todo->category_id == $categ->id)
                                 {
                                     echo $categ->name;
                                 }
-                                else
-                                {
-                                    echo "NA";
                                 }
                                 ?>
                                 

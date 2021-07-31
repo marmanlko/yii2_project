@@ -75,24 +75,20 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $todo=todo::find()->all();
+        $todo=todo::find()
+        // ->select('todo.*,category.*')
+        // ->leftJoin('todo','category.id=todo.category_id')
+        // ->where(['todo.id'=>10])
+        // ->with('category')
+        ->all();
         $category=category::find()->all();
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new Todo();
-        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
-        //     return $this->goBack();
-        // }
-
-        // $model->password = '';
         return $this->render('login', [
             'model' => $model,
             'todo'=>$todo,
             'category'=>$category,
         ]);
-
+        $model =new Todo();
         $formData=Yii::$app->request->post();
         if($model->load($formData)){
             if($model->save()){
@@ -101,7 +97,8 @@ class SiteController extends Controller
             }
             else
             {
-                Yii::$app->getSession()->setFlash('message',"Successfull");   
+                Yii::$app->getSession()->setFlash('message',"Successfull"); 
+                return $this->redirect(['index']);  
             }
         }
         return $this->render('login',['post'=>$model]);
